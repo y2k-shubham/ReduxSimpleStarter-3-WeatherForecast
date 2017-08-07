@@ -1,6 +1,11 @@
+// library imports
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+// manual imports
+import { fetchWeather } from '../actions/index.js';
 
-export default class SearchBar extends Component {
+class SearchBar extends Component {
 	// to make SearchBar a controlled component, we'll set it's value from component state
 	// a controlled component has it's value set by state and not the other way around
 	constructor(props) {
@@ -23,9 +28,14 @@ export default class SearchBar extends Component {
 		});
 	}
 
-	// override the default browser behaviour to automatically submit form element upon clicking button or hitting enter key
 	handleFormSubmit(event) {
+		// override the default browser behaviour to automatically submit form element upon clicking button or hitting enter key
 		event.preventDefault();
+
+		this.props.fetchWeather(this.state.term);
+		this.setState({
+			term: '', 
+		});
 	}
 
 	render() {
@@ -49,3 +59,15 @@ export default class SearchBar extends Component {
 		);
 	}
 }
+
+// it binds our action-creator fetchWeather to dispath to make sure that all actions created by fetchWeather
+// are actually delivered to various reducers
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ fetchWeather }, dispatch);
+}
+
+// here, instead of passing mapStateToProps as the first argument, we passed null
+// this tells react that we don't care about updating the props of this component whenever application state changes
+export default connect(null, mapDispatchToProps)(SearchBar);
+
+//  after above two steps, we'll get access to method fetchWeather as this.props.fetchWeather

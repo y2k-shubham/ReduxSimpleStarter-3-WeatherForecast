@@ -1,10 +1,16 @@
+// library imports
 import React, { Component } from 'react';
+// Component imports
 import SearchBar from '../containers/search_bar.js';
+import WeatherList from '../containers/weather_list.js';;
 
 export default class App extends Component {
 	render() {
 		return (
-			<SearchBar />
+			<div>
+				<SearchBar />
+				<WeatherList />
+			</div>
 		);
 	}
 }
