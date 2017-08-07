@@ -44,7 +44,7 @@ class SearchBar extends Component {
 				className="input-group"
 				onSubmit={this.handleFormSubmit}>
 					<input
-						placeholder="Enter city name"
+						placeholder="Enter city name (only Indian cities)"
 						className="form-control"
 						value={this.state.term}
 						onChange={this.handleInputChange}/>

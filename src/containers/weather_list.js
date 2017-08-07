@@ -4,10 +4,15 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // component imports
 import Chart from '../components/chart.js';
+import { removeWeather } from '../actions/index.js';;
 
 class WeatherList extends Component {
 	constructor(props) {
 		super(props);
+	}
+
+	handleClick(city) {
+		this.props.removeWeather(city);
 	}
 
 	renderWeather(cityData) {
@@ -19,7 +24,7 @@ class WeatherList extends Component {
 		return (
 			<tr key={name}>
 				<td>
-					<button onClick={(event) => {console.log(name)}}>-</button>
+					<button onClick={() => this.handleClick(name)}>-</button>
 				</td>
 				<td>{name}</td>
 				<td>
@@ -47,7 +52,7 @@ class WeatherList extends Component {
 					</tr>
 				</thead>
 				<tbody>
-					{this.props.weather.map(this.renderWeather)}
+					{this.props.weather.map(this.renderWeather, this)}
 				</tbody>
 			</table>
 		);
@@ -58,4 +63,8 @@ function mapStateToProps({weather}) {
 	return ({weather});
 }
 
-export default connect(mapStateToProps)(WeatherList);
+function mapDispatchToProps(dispatch) {
+	return bindActionCreators({ removeWeather }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherList);

@@ -27,5 +27,5 @@ export function removeWeather(city) {
 	return ({
 		type: REMOVE_WEATHER,
 		payload: city,
-	});;
+	});
 }
