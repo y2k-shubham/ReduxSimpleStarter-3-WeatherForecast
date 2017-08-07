@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 // component imports
 import Chart from '../components/chart.js';
-import { removeWeather } from '../actions/index.js';;
+import { removeWeather } from '../actions/index.js';
+import GoogleMap from '../components/google_map.js';
 
 class WeatherList extends Component {
 	constructor(props) {
@@ -21,12 +22,16 @@ class WeatherList extends Component {
 		let arrPress = cityData.list.map(item => item.main.pressure);
 
 		const name = cityData.city.name;
+		const {lat, lon} = cityData.city.coord;
 		return (
 			<tr key={name}>
 				<td>
 					<button onClick={() => this.handleClick(name)}>-</button>
 				</td>
 				<td>{name}</td>
+				<td>
+					<GoogleMap lat={lat} lon={lon}/>
+				</td>
 				<td>
 					<Chart data={arrTemp} color='orange' units='K'/>
 				</td>
@@ -45,7 +50,9 @@ class WeatherList extends Component {
 			<table className="table table-hover">
 				<thead>
 					<tr>
-						<th>Cities</th>
+						<th></th>
+						<th>City</th>
+						<th>Map</th>
 						<th>Temperature</th>
 						<th>Pressure</th>
 						<th>Humidity</th>
